@@ -36,3 +36,11 @@ The actual time comes from the device clock and timezone. Spinning changes only 
 No ChatGPT hosting dependency, accounts, paid APIs or subscriptions. This is a web app, not a native Home Screen widget or Watch app.
 
 Original implementation inspired by the playful everyday utilities of Not Boring Software. No affiliation or copied proprietary assets.
+
+## BOSS edition — The WTF Files
+
+Open `?for=BOSS` on the clock URL. The base clock stays available at the ordinary URL. BOSS has ten hand-checked multiple-choice questions, each with a direct source shown after a correct answer. Each newly mastered question unlocks one skin and one distinct short animation. Previously solved questions cannot award duplicate rewards. Wrong answers can be retried.
+
+Progress uses the separate `juice-play:boss:trivia-v1` local-storage key. Clearing browser data resets it; progress does not sync between devices or necessarily between Safari and an installed web app. The BOSS manifest preserves the edition on Home Screen launch, and sharing preserves `for=BOSS`. These are casual local rewards, not a secure account or anti-cheat system.
+
+Question content and reward definitions live in `trivia-data.js`; UI/state live in `trivia.js`. Stable question IDs preserve valid earned progress. Maintain one reward pair per question. Verify each new fact against a direct source before adding it. Keep evidence-based explanations distinct from playful commentary.

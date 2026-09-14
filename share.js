@@ -7,7 +7,7 @@
   const status = document.getElementById('share-status');
   function urlToShare() {
     const url = new URL('./', location.href);
-    const name = new URL(location.href).searchParams.get('for');
+    const name = window.JUICE_PLAY?.bossEdition ? 'BOSS' : new URL(location.href).searchParams.get('for');
     if (name) url.searchParams.set('for', name.slice(0, 60));
     return url.href;
   }
@@ -20,7 +20,7 @@
     if (typeof navigator.share !== 'function') { fallback(); return; }
     button.disabled = true;
     try {
-      await navigator.share({ title: 'JUICE Play — Clock', url: urlToShare() });
+      await navigator.share({ title: document.title, url: urlToShare() });
     } catch (error) {
       if (error.name !== 'AbortError') fallback();
     } finally { button.disabled = false; }

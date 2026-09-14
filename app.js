@@ -2,8 +2,8 @@
  'use strict';
  const $=id=>document.getElementById(id),config=window.JUICE_PLAY;
  const reduced=matchMedia('(prefers-reduced-motion: reduce)');
- const read=(k,f)=>{try{return JSON.parse(localStorage.getItem('juice-play:'+k))??f}catch{return f}};
- const save=(k,v)=>{try{localStorage.setItem('juice-play:'+k,JSON.stringify(v))}catch{}};
+ const read=(k,f)=>{try{return JSON.parse(localStorage.getItem(config.storagePrefix+k))??f}catch{return f}};
+ const save=(k,v)=>{try{localStorage.setItem(config.storagePrefix+k,JSON.stringify(v))}catch{}};
  let use24=read('24h',config.default24Hour),sound=false,audio,skin=read('skin',config.defaultSkin),lastMinute='',lastSecond=-1;
  let rotation=0,velocity=0,drag=null,frame=0,lastFrame=0,tilt=0;
  const clock=$('clock'),hours=$('hours'),minutes=$('minutes'),orbit=$('orbit');
@@ -11,7 +11,7 @@
  const recipient=new URLSearchParams(location.search).get('for');
  $('dedication').textContent=recipient?'For '+recipient.slice(0,60)+'. '+config.dedication:config.dedication;
  document.title='JUICE Play · '+config.title.replace(/\.$/,'');
- function applySkin(value){skin=['citrus','night','candy'].includes(value)?value:'citrus';document.body.dataset.skin=skin;document.querySelectorAll('[name=skin]').forEach(el=>el.checked=el.value===skin);document.querySelector('meta[name=theme-color]').content={citrus:'#f4f1e9',night:'#171a23',candy:'#f7e7f2'}[skin];save('skin',skin)}
+ function applySkin(value){skin=['citrus','night','candy'].includes(value)?value:'citrus';document.body.dataset.skin=skin;document.querySelectorAll('[name=skin]').forEach(el=>el.checked=el.value===skin);document.querySelector('meta[name=theme-color]').content={citrus:'#f4f1e9',night:'#171a23',candy:'#f7e7f2'}[skin];save('skin',skin);document.dispatchEvent(new CustomEvent('juice:skin',{detail:{skin}}))}
  applySkin(skin);
  const tickFragment=document.createDocumentFragment();
  for(let i=0;i<60;i++){const tick=document.createElement('span');tick.className='tick'+(i%5===0?' major':'');tick.style.transform='rotate('+i*6+'deg)';tickFragment.append(tick)}$('ticks').append(tickFragment);
@@ -51,6 +51,7 @@
  window.addEventListener('appinstalled',()=>{$('install').hidden=true;installPrompt=null});
  $('install').addEventListener('click',async()=>{if(installPrompt){await installPrompt.prompt();const result=await installPrompt.userChoice;if(result.outcome==='accepted')$('install').hidden=true;installPrompt=null;return}const ios=/iPad|iPhone|iPod/.test(navigator.userAgent)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);$('install-instructions').textContent=ios?'Open this page in Safari. Tap Share, then Add to Home Screen, then Add.':'Open your browser menu and choose Install app or Add to Home Screen. In Safari on Mac, choose File → Add to Dock.';$('install-dialog').showModal()});
  $('install-dialog').addEventListener('click',e=>{if(e.target===$('install-dialog'))$('install-dialog').close()});
+ window.JuiceClock=Object.freeze({setSkin:applySkin,bounce,tone});
  updateTime();let timer=setInterval(updateTime,250);start();
  document.addEventListener('visibilitychange',()=>{if(document.hidden){clearInterval(timer);cancelAnimationFrame(frame);frame=0;drag=null;if(audio)audio.suspend().catch(()=>{})}else{updateTime();timer=setInterval(updateTime,250);rotation=velocity=tilt=0;start()}});
  if('serviceWorker'in navigator&&(location.protocol==='https:'||location.hostname==='localhost'))navigator.serviceWorker.register('./sw.js').catch(()=>{});
