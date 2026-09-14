@@ -44,3 +44,9 @@ Open `?for=BOSS` on the clock URL. The base clock stays available at the ordinar
 Progress uses the separate `juice-play:boss:trivia-v1` local-storage key. Clearing browser data resets it; progress does not sync between devices or necessarily between Safari and an installed web app. The BOSS manifest preserves the edition on Home Screen launch, and sharing preserves `for=BOSS`. These are casual local rewards, not a secure account or anti-cheat system.
 
 Question content and reward definitions live in `trivia-data.js`; UI/state live in `trivia.js`. Stable question IDs preserve valid earned progress. Maintain one reward pair per question. Verify each new fact against a direct source before adding it. Keep evidence-based explanations distinct from playful commentary.
+
+## App identity rule
+
+Each app gets one distinct home-screen colour, one simple symbol showing its function, and a short readable name. Never use a generic J as the app icon. Clock owns orange with a clock face; BOSS owns violet with a question card. Match the default skin to that identity, but keep launcher icons stable when users change skins. New app identities must set the favicon, Apple touch icon, Apple title, manifest icons/name/colours, and offline cache together. The two SVG files are the editable icon sources; PNGs are their installable exports.
+
+Existing home-screen shortcuts may retain their old icon. Add a fresh shortcut from the updated page if needed. Keep existing saved progress; avoid clearing browser data.

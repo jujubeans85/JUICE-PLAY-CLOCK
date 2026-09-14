@@ -11,7 +11,7 @@
  const recipient=new URLSearchParams(location.search).get('for');
  $('dedication').textContent=recipient?'For '+recipient.slice(0,60)+'. '+config.dedication:config.dedication;
  document.title='JUICE Play · '+config.title.replace(/\.$/,'');
- function applySkin(value){skin=['citrus','night','candy'].includes(value)?value:'citrus';document.body.dataset.skin=skin;document.querySelectorAll('[name=skin]').forEach(el=>el.checked=el.value===skin);document.querySelector('meta[name=theme-color]').content={citrus:'#f4f1e9',night:'#171a23',candy:'#f7e7f2'}[skin];save('skin',skin);document.dispatchEvent(new CustomEvent('juice:skin',{detail:{skin}}))}
+ function applySkin(value){skin=['citrus','night','candy',...(config.bossEdition?['violet']:[])].includes(value)?value:'citrus';document.body.dataset.skin=skin;document.querySelectorAll('[name=skin]').forEach(el=>el.checked=el.value===skin);document.querySelector('meta[name=theme-color]').content={citrus:'#fff1e2',night:'#171a23',candy:'#f7e7f2',violet:'#eee5ff'}[skin];save('skin',skin);document.dispatchEvent(new CustomEvent('juice:skin',{detail:{skin}}))}
  applySkin(skin);
  const tickFragment=document.createDocumentFragment();
  for(let i=0;i<60;i++){const tick=document.createElement('span');tick.className='tick'+(i%5===0?' major':'');tick.style.transform='rotate('+i*6+'deg)';tickFragment.append(tick)}$('ticks').append(tickFragment);

@@ -1,1 +1,25 @@
-{"id":"./","name":"JUICE Play — Clock","short_name":"Juice Clock","description":"A little time to play.","start_url":"./","scope":"./","display":"standalone","background_color":"#f4f1e9","theme_color":"#f4f1e9","icons":[{"src":"./icon-192.png","sizes":"192x192","type":"image/png","purpose":"any"},{"src":"./icon-512.png","sizes":"512x512","type":"image/png","purpose":"any maskable"}]}
+{
+  "id": "./",
+  "name": "JUICE Play \u2014 Clock",
+  "short_name": "Clock",
+  "description": "A little time to play.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#fff1e2",
+  "theme_color": "#fff1e2",
+  "icons": [
+    {
+      "src": "./clock-icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "./clock-icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
